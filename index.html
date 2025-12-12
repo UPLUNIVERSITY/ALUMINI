@@ -5,7 +5,7 @@
   <title>UPL University Alumni Meet 2026 – Registration</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    /* (unchanged styles — copied exactly from your original) */
+    /* EXACT same styles as your original — DO NOT CHANGE */
     * { box-sizing: border-box; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
     body { margin: 0; padding: 1rem; background: #020617; color: #e5e7eb; display: flex; justify-content: center; }
     .container { max-width: 900px; width: 100%; display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 1.5rem; }
@@ -66,13 +66,9 @@
 
     <!-- RIGHT: Registration + Payment -->
     <div class="card">
-      <h2 style="font-size:1.1rem;margin-top:0;margin-bottom:1rem;">
-        Registration & Payment
-      </h2>
+      <h2 style="font-size:1.1rem;margin-top:0;margin-bottom:1rem;">Registration & Payment</h2>
 
-      <!-- 🔥 Direct POST to Apps Script (kept, but we intercept submit to open Razorpay) -->
-      <form id="regForm" method="POST"
-        action="https://script.google.com/macros/s/AKfycbzutoQPzC7oliVz8rSbW2WFqQF3zKfY7TRkc83HDRRkFBSkSRHESh-UPLeVZswYQFX0Sw/exec">
+      <form id="regForm" method="POST" action="">
         <label for="name">Full Name *</label>
         <input id="name" name="name" type="text" required />
 
@@ -116,39 +112,30 @@
           <strong>₹<span id="totalAmount">0</span></strong>
         </div>
 
-        <!-- Hidden field: total amount backend ko jayega -->
+        <!-- Hidden: amount and fields for server-side callback tracking -->
         <input type="hidden" id="amount" name="amount" value="0" />
+        <input type="hidden" id="txnId" name="txnId" value="" />
+        <input type="hidden" id="phonepe_response" name="phonepe_response" value="" />
 
-        <!-- Hidden fields to store payment result (filled after successful payment) -->
-        <input type="hidden" id="rzp_payment_id" name="rzp_payment_id" value="" />
-        <input type="hidden" id="rzp_order_id" name="rzp_order_id" value="" />
-        <input type="hidden" id="rzp_signature" name="rzp_signature" value="" />
+        <button id="payBtn" type="submit">Submit & Pay</button>
 
-        <button id="payBtn" type="submit">
-          Submit & Pay
-        </button>
-        <div class="note">
-          After submitting, you’ll see the Razorpay payment popup. A confirmation email will be sent after payment.
-        </div>
-        <p class="small" style="margin-top:0.4rem;">
-          Official UPI ID: <strong>rupalibe@oksbi</strong>
-        </p>
+        <div class="note">After submitting, PhonePe checkout will open. Do not refresh while payment completes.</div>
+        <p class="small" style="margin-top:0.4rem;">Official UPI ID: <strong>rupalibe@oksbi</strong></p>
       </form>
     </div>
   </div>
 
-  <!-- Razorpay checkout script (required) -->
-  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-
   <script>
+    // ======= CONFIG: replace this with your deployed Apps Script URL (create_payment action) =======
+    const CREATE_PAYMENT_URL = "https://script.google.com/macros/s/AKfycbxsQLUCQZGwNLvFmBJcYJcQa4VwlPsPko2aOh1QcrEqw9EshLFB02Gz6e9jsklMiUsi/exec";
+    // ========================================================================
+
     const PRICE_PER_PERSON = 100;
     const personsSelect = document.getElementById("persons");
     const totalAmountSpan = document.getElementById("totalAmount");
     const amountInput = document.getElementById("amount");
     const regForm = document.getElementById("regForm");
-    const payBtn = document.getElementById("payBtn");
 
-    // Update UI amount
     function updateAmount() {
       const persons = Number(personsSelect.value || "0");
       const total = persons * PRICE_PER_PERSON;
@@ -158,84 +145,79 @@
     }
     personsSelect.addEventListener("change", updateAmount);
 
-    // Intercept form submit to create Razorpay order and open checkout
+    // Utility: show modal-like alert (simple)
+    function userAlert(msg) {
+      alert(msg);
+    }
+
+    // Submit -> create PhonePe payment, then redirect to paymentUrl (server returns paymentUrl)
     regForm.addEventListener("submit", async function (ev) {
       ev.preventDefault();
-
-      // basic validation
       if (!regForm.reportValidity()) return;
 
       const amount = Number(amountInput.value || 0);
       if (!amount || amount <= 0) {
-        alert("Please select valid number of persons.");
+        userAlert("Please select number of persons.");
         return;
       }
 
-      // Amount in paise for Razorpay
-      const amountPaise = amount * 100;
+      // Build FormData to send minimal required fields to server
+      const fd = new FormData(regForm);
+      // PhonePe expects amount in paise on server; we give rupees here and server will convert
+      fd.set("amount", (amount * 100).toString()); // paise
 
-      // === 1) Ask your backend to create a Razorpay order
-      // Replace `YOUR_DEPLOYED_WEBAPP_URL` with your Apps Script deploy URL or your server endpoint
-      // The backend must call Razorpay Orders API with your key secret and return JSON with { id: "order_XXXX", currency, amount, key_id }
-      const createOrderUrl = "https://script.google.com/macros/s/YOUR_DEPLOYED_WEBAPP_URL/exec?action=create_order";
+      // disable button to prevent duplicate clicks
+      const submitBtn = document.getElementById("payBtn");
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Processing...";
 
-      // Send form data for convenience (name, email, phone) so order can have receipt/prefill on server if desired
-      const formData = new FormData(regForm);
-      formData.set("amount", amountPaise); // paise
-
-      let orderResp;
       try {
-        const r = await fetch(createOrderUrl, {
-          method: "POST",
-          body: formData
-        });
-        orderResp = await r.json();
+        const resp = await fetch(CREATE_PAYMENT_URL, { method: "POST", body: fd });
+        if (!resp.ok) {
+          throw new Error("Network response not OK: " + resp.status);
+        }
+        const data = await resp.json();
+
+        if (!data || !data.paymentUrl) {
+          console.error("create_payment error:", data);
+          userAlert("Payment initialization failed. Contact organiser.");
+          submitBtn.disabled = false;
+          submitBtn.textContent = "Submit & Pay";
+          return;
+        }
+
+        // store server txn id (helps later for reconciliation)
+        if (data.transactionId) {
+          document.getElementById("txnId").value = data.transactionId;
+        }
+
+        // Redirect current window to PhonePe checkout (better for redirect flow / callback)
+        window.location.href = data.paymentUrl;
+
       } catch (err) {
         console.error(err);
-        alert("Could not create payment order. Please try again or contact the organizer.");
-        return;
+        userAlert("Could not start payment. Check your internet connection and try again.");
+        document.getElementById("payBtn").disabled = false;
+        document.getElementById("payBtn").textContent = "Submit & Pay";
       }
-
-      if (!orderResp || !orderResp.id) {
-        console.error("Invalid order response", orderResp);
-        alert("Payment order creation failed. Check server logs.");
-        return;
-      }
-
-      // === 2) Open Razorpay checkout with returned order id
-      const options = {
-        key: orderResp.key_id || "YOUR_RAZORPAY_KEY_ID", // fallback if server does not return key_id
-        amount: orderResp.amount || amountPaise,
-        currency: orderResp.currency || "INR",
-        name: "UPL University",
-        description: "Alumni Meet 2026 - Registration",
-        order_id: orderResp.id,
-        handler: function (response) {
-          // payment success — fill hidden fields and submit the form to your registration endpoint
-          document.getElementById("rzp_payment_id").value = response.razorpay_payment_id || "";
-          document.getElementById("rzp_order_id").value = response.razorpay_order_id || "";
-          document.getElementById("rzp_signature").value = response.razorpay_signature || "";
-
-          // Now submit the form to your Apps Script registration handler (the same action URL)
-          // This will record registration + payment details in your spreadsheet and send email.
-          regForm.submit();
-        },
-        modal: {
-          ondismiss: function () {
-            // user closed checkout without paying
-            alert("Payment was not completed. Registration won't be confirmed until payment.");
-          }
-        },
-        prefill: {
-          name: formData.get("name") || "",
-          email: formData.get("email") || "",
-          contact: formData.get("phone") || ""
-        }
-      };
-
-      const rzp = new Razorpay(options);
-      rzp.open();
     });
+
+    // If user returns to this page after PhonePe redirect, PhonePe may attach params.
+    // Optionally, you can detect URL params and auto-call verification endpoint; but server-side callback is primary.
+    (function checkReturnedParams() {
+      try {
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has("phonepe_txn") || urlParams.has("status")) {
+          // The server callback will also handle verification; here we just show a message
+          const s = urlParams.get("status") || "unknown";
+          if (s.toLowerCase() === "success") {
+            alert("Payment completed. If confirmation not received, contact the organiser with your transaction id.");
+          } else {
+            alert("Payment status: " + s + ". If you were charged and status shows failed, contact support.");
+          }
+        }
+      } catch (e) { /* ignore */ }
+    })();
   </script>
 </body>
 </html>
