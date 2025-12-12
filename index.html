@@ -5,146 +5,31 @@
   <title>UPL University Alumni Meet 2026 – Registration</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    * {
-      box-sizing: border-box;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-        sans-serif;
-    }
-    body {
-      margin: 0;
-      padding: 1rem;
-      background: #020617;
-      color: #e5e7eb;
-      display: flex;
-      justify-content: center;
-    }
-    .container {
-      max-width: 900px;
-      width: 100%;
-      display: grid;
-      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
-      gap: 1.5rem;
-    }
-    @media (max-width: 768px) {
-      .container {
-        grid-template-columns: 1fr;
-      }
-    }
-    .card {
-      background: #020617;
-      border-radius: 1.25rem;
-      padding: 1.5rem;
-      border: 1px solid #1f2937;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-    }
-    .card-header {
-      margin-bottom: 1rem;
-    }
-    h1 {
-      font-size: 1.5rem;
-      margin: 0 0 0.4rem;
-    }
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      padding: 0.2rem 0.55rem;
-      border-radius: 999px;
-      background: rgba(34, 197, 94, 0.1);
-      color: #4ade80;
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      margin-bottom: 0.6rem;
-    }
-    .subtitle {
-      font-size: 0.9rem;
-      color: #9ca3af;
-    }
-    .event-meta {
-      margin-top: 0.85rem;
-      padding: 0.85rem;
-      border-radius: 0.9rem;
-      background: #020617;
-      border: 1px solid #1f2937;
-      font-size: 0.85rem;
-    }
-    .event-meta div {
-      margin-bottom: 0.25rem;
-    }
-    .event-meta strong {
-      color: #e5e7eb;
-    }
-    .highlight {
-      color: #facc15;
-      font-weight: 500;
-    }
-    label {
-      display: block;
-      font-size: 0.8rem;
-      margin-bottom: 0.22rem;
-    }
-    input,
-    select {
-      width: 100%;
-      padding: 0.55rem 0.65rem;
-      border-radius: 0.5rem;
-      border: 1px solid #374151;
-      background: #020617;
-      color: #e5e7eb;
-      font-size: 0.9rem;
-      margin-bottom: 0.85rem;
-      outline: none;
-    }
-    input:focus,
-    select:focus {
-      border-color: #22c55e;
-      box-shadow: 0 0 0 1px #22c55e40;
-    }
-    .row {
-      display: flex;
-      gap: 0.75rem;
-    }
-    .row > div {
-      flex: 1;
-    }
-    .amount-box {
-      background: #022c22;
-      border-radius: 0.9rem;
-      padding: 0.85rem 1rem;
-      margin-bottom: 1rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.9rem;
-    }
-    .amount-box strong {
-      font-size: 1.1rem;
-    }
-    button {
-      width: 100%;
-      padding: 0.7rem;
-      border-radius: 999px;
-      border: none;
-      background: linear-gradient(to right, #22c55e, #16a34a);
-      color: #022c22;
-      font-weight: 600;
-      font-size: 0.95rem;
-      cursor: pointer;
-      margin-top: 0.25rem;
-    }
-    button:hover {
-      filter: brightness(1.05);
-    }
-    .note {
-      font-size: 0.75rem;
-      color: #6b7280;
-      margin-top: 0.6rem;
-    }
-    .small {
-      font-size: 0.8rem;
-      color: #9ca3af;
-    }
+    /* (unchanged styles — copied exactly from your original) */
+    * { box-sizing: border-box; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    body { margin: 0; padding: 1rem; background: #020617; color: #e5e7eb; display: flex; justify-content: center; }
+    .container { max-width: 900px; width: 100%; display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 1.5rem; }
+    @media (max-width: 768px) { .container { grid-template-columns: 1fr; } }
+    .card { background: #020617; border-radius: 1.25rem; padding: 1.5rem; border: 1px solid #1f2937; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); }
+    .card-header { margin-bottom: 1rem; }
+    h1 { font-size: 1.5rem; margin: 0 0 0.4rem; }
+    .badge { display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.2rem 0.55rem; border-radius: 999px; background: rgba(34, 197, 94, 0.1); color: #4ade80; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.6rem; }
+    .subtitle { font-size: 0.9rem; color: #9ca3af; }
+    .event-meta { margin-top: 0.85rem; padding: 0.85rem; border-radius: 0.9rem; background: #020617; border: 1px solid #1f2937; font-size: 0.85rem; }
+    .event-meta div { margin-bottom: 0.25rem; }
+    .event-meta strong { color: #e5e7eb; }
+    .highlight { color: #facc15; font-weight: 500; }
+    label { display: block; font-size: 0.8rem; margin-bottom: 0.22rem; }
+    input, select { width: 100%; padding: 0.55rem 0.65rem; border-radius: 0.5rem; border: 1px solid #374151; background: #020617; color: #e5e7eb; font-size: 0.9rem; margin-bottom: 0.85rem; outline: none; }
+    input:focus, select:focus { border-color: #22c55e; box-shadow: 0 0 0 1px #22c55e40; }
+    .row { display: flex; gap: 0.75rem; }
+    .row > div { flex: 1; }
+    .amount-box { background: #022c22; border-radius: 0.9rem; padding: 0.85rem 1rem; margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem; }
+    .amount-box strong { font-size: 1.1rem; }
+    button { width: 100%; padding: 0.7rem; border-radius: 999px; border: none; background: linear-gradient(to right, #22c55e, #16a34a); color: #022c22; font-weight: 600; font-size: 0.95rem; cursor: pointer; margin-top: 0.25rem; }
+    button:hover { filter: brightness(1.05); }
+    .note { font-size: 0.75rem; color: #6b7280; margin-top: 0.6rem; }
+    .small { font-size: 0.8rem; color: #9ca3af; }
   </style>
 </head>
 <body>
@@ -185,58 +70,30 @@
         Registration & Payment
       </h2>
 
-      <!-- 🔥 Direct POST to Apps Script -->
-      <form
-        id="regForm"
-        method="POST"
-        action="https://script.google.com/macros/s/AKfycbx8u1RlIWAm_waHh1kHaDTt2Xbv567zMB3W7K4ynDdibom7h-7hk9kBv8AOT3f8f--7_w/exec">
+      <!-- 🔥 Direct POST to Apps Script (kept, but we intercept submit to open Razorpay) -->
+      <form id="regForm" method="POST"
+        action="https://script.google.com/macros/s/AKfycbzutoQPzC7oliVz8rSbW2WFqQF3zKfY7TRkc83HDRRkFBSkSRHESh-UPLeVZswYQFX0Sw/exec">
         <label for="name">Full Name *</label>
         <input id="name" name="name" type="text" required />
 
         <div class="row">
           <div>
             <label for="passout">Pass-out Year *</label>
-            <input
-              id="passout"
-              name="passout"
-              type="number"
-              min="2000"
-              max="2035"
-              required
-            />
+            <input id="passout" name="passout" type="number" min="2000" max="2035" required />
           </div>
           <div>
             <label for="branch">Branch *</label>
-            <input
-              id="branch"
-              name="branch"
-              type="text"
-              placeholder="e.g., Computer, Mechanical"
-              required
-            />
+            <input id="branch" name="branch" type="text" placeholder="e.g., Computer, Mechanical" required />
           </div>
         </div>
 
         <label for="discipline">Discipline *</label>
-        <input
-          id="discipline"
-          name="discipline"
-          type="text"
-          placeholder="Diploma / B.Tech / B.Sc / BE / M.Tech"
-          required
-        />
+        <input id="discipline" name="discipline" type="text" placeholder="Diploma / B.Tech / B.Sc / BE / M.Tech" required />
 
         <div class="row">
           <div>
             <label for="phone">Mobile Number *</label>
-            <input
-              id="phone"
-              name="phone"
-              type="tel"
-              pattern="[0-9]{10}"
-              maxlength="10"
-              required
-            />
+            <input id="phone" name="phone" type="tel" pattern="[0-9]{10}" maxlength="10" required />
           </div>
           <div>
             <label for="email">Email *</label>
@@ -262,12 +119,16 @@
         <!-- Hidden field: total amount backend ko jayega -->
         <input type="hidden" id="amount" name="amount" value="0" />
 
-        <button type="submit">
-          Submit & View Payment Instructions
+        <!-- Hidden fields to store payment result (filled after successful payment) -->
+        <input type="hidden" id="rzp_payment_id" name="rzp_payment_id" value="" />
+        <input type="hidden" id="rzp_order_id" name="rzp_order_id" value="" />
+        <input type="hidden" id="rzp_signature" name="rzp_signature" value="" />
+
+        <button id="payBtn" type="submit">
+          Submit & Pay
         </button>
         <div class="note">
-          After submitting, you’ll see your exact amount and UPI payment link on the
-          next page. A confirmation email will also be sent.
+          After submitting, you’ll see the Razorpay payment popup. A confirmation email will be sent after payment.
         </div>
         <p class="small" style="margin-top:0.4rem;">
           Official UPI ID: <strong>rupalibe@oksbi</strong>
@@ -276,12 +137,18 @@
     </div>
   </div>
 
+  <!-- Razorpay checkout script (required) -->
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
   <script>
     const PRICE_PER_PERSON = 100;
     const personsSelect = document.getElementById("persons");
     const totalAmountSpan = document.getElementById("totalAmount");
     const amountInput = document.getElementById("amount");
+    const regForm = document.getElementById("regForm");
+    const payBtn = document.getElementById("payBtn");
 
+    // Update UI amount
     function updateAmount() {
       const persons = Number(personsSelect.value || "0");
       const total = persons * PRICE_PER_PERSON;
@@ -289,8 +156,86 @@
       totalAmountSpan.textContent = safeTotal;
       amountInput.value = safeTotal;
     }
-
     personsSelect.addEventListener("change", updateAmount);
+
+    // Intercept form submit to create Razorpay order and open checkout
+    regForm.addEventListener("submit", async function (ev) {
+      ev.preventDefault();
+
+      // basic validation
+      if (!regForm.reportValidity()) return;
+
+      const amount = Number(amountInput.value || 0);
+      if (!amount || amount <= 0) {
+        alert("Please select valid number of persons.");
+        return;
+      }
+
+      // Amount in paise for Razorpay
+      const amountPaise = amount * 100;
+
+      // === 1) Ask your backend to create a Razorpay order
+      // Replace `YOUR_DEPLOYED_WEBAPP_URL` with your Apps Script deploy URL or your server endpoint
+      // The backend must call Razorpay Orders API with your key secret and return JSON with { id: "order_XXXX", currency, amount, key_id }
+      const createOrderUrl = "https://script.google.com/macros/s/YOUR_DEPLOYED_WEBAPP_URL/exec?action=create_order";
+
+      // Send form data for convenience (name, email, phone) so order can have receipt/prefill on server if desired
+      const formData = new FormData(regForm);
+      formData.set("amount", amountPaise); // paise
+
+      let orderResp;
+      try {
+        const r = await fetch(createOrderUrl, {
+          method: "POST",
+          body: formData
+        });
+        orderResp = await r.json();
+      } catch (err) {
+        console.error(err);
+        alert("Could not create payment order. Please try again or contact the organizer.");
+        return;
+      }
+
+      if (!orderResp || !orderResp.id) {
+        console.error("Invalid order response", orderResp);
+        alert("Payment order creation failed. Check server logs.");
+        return;
+      }
+
+      // === 2) Open Razorpay checkout with returned order id
+      const options = {
+        key: orderResp.key_id || "YOUR_RAZORPAY_KEY_ID", // fallback if server does not return key_id
+        amount: orderResp.amount || amountPaise,
+        currency: orderResp.currency || "INR",
+        name: "UPL University",
+        description: "Alumni Meet 2026 - Registration",
+        order_id: orderResp.id,
+        handler: function (response) {
+          // payment success — fill hidden fields and submit the form to your registration endpoint
+          document.getElementById("rzp_payment_id").value = response.razorpay_payment_id || "";
+          document.getElementById("rzp_order_id").value = response.razorpay_order_id || "";
+          document.getElementById("rzp_signature").value = response.razorpay_signature || "";
+
+          // Now submit the form to your Apps Script registration handler (the same action URL)
+          // This will record registration + payment details in your spreadsheet and send email.
+          regForm.submit();
+        },
+        modal: {
+          ondismiss: function () {
+            // user closed checkout without paying
+            alert("Payment was not completed. Registration won't be confirmed until payment.");
+          }
+        },
+        prefill: {
+          name: formData.get("name") || "",
+          email: formData.get("email") || "",
+          contact: formData.get("phone") || ""
+        }
+      };
+
+      const rzp = new Razorpay(options);
+      rzp.open();
+    });
   </script>
 </body>
 </html>
