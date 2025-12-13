@@ -1,183 +1,95 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UPL University Alumni Registration</title>
-
-<!-- Favicon fix (removes 404 error) -->
+<title>UPL Alumni Registration</title>
 <link rel="icon" href="data:,">
-
-<!-- Tailwind -->
 <script src="https://cdn.tailwindcss.com"></script>
-
-<!-- Razorpay -->
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-
-<!-- Icons & Fonts -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-
-<style>
-body{
-  font-family:'Poppins',sans-serif;
-  background:linear-gradient(rgba(15,23,42,.75),rgba(15,23,42,.75)),
-  url('https://i.ibb.co/q3G5k42g/Slider-133972189776778304.jpg');
-  background-size:cover;
-  background-attachment:fixed;
-}
-.glass-card{
-  background:rgba(255,255,255,.98);
-  border-radius:20px;
-  box-shadow:0 25px 50px -12px rgba(0,0,0,.5);
-}
-.phonepe-btn{background:#5f259f}
-.phonepe-btn:hover{background:#4a1d7c}
-.loader{
-  border:3px solid #eee;
-  border-top:3px solid #5f259f;
-  border-radius:50%;
-  width:20px;height:20px;
-  animation:spin 1s linear infinite;
-}
-@keyframes spin{to{transform:rotate(360deg)}}
-</style>
 </head>
 
-<body class="min-h-screen flex items-center justify-center p-4">
+<body class="bg-gray-100 p-6">
 
-<div class="glass-card w-full max-w-5xl flex flex-col lg:flex-row overflow-hidden">
+<form id="f" class="max-w-xl mx-auto bg-white p-6 rounded"
+ onsubmit="pay(event)">
 
-<!-- LEFT -->
-<div class="w-full lg:w-4/12 bg-gray-900 text-white p-8 relative">
-  <img src="https://i.ibb.co/2Yhfrk8H/UPL-LOGO.png" class="h-16 mb-6">
-  <h3 class="text-xs font-bold tracking-widest uppercase text-purple-400">UPL University</h3>
-  <h1 class="text-3xl font-bold mb-4">Alumni Meet 2025</h1>
-  <p class="text-gray-300 text-sm">Join us for an evening of nostalgia and networking.</p>
-</div>
+<input id="name" placeholder="Name" required class="border p-2 w-full mb-2">
+<input id="email" placeholder="Email" required class="border p-2 w-full mb-2">
+<input id="mobile" placeholder="Mobile" required class="border p-2 w-full mb-2">
+<input id="year" placeholder="Year" required class="border p-2 w-full mb-2">
+<input id="discipline" placeholder="Discipline" required class="border p-2 w-full mb-2">
+<input id="department" placeholder="Department" required class="border p-2 w-full mb-2">
 
-<!-- RIGHT -->
-<div class="w-full lg:w-8/12 p-8">
-<h2 class="text-2xl font-bold mb-6">Registration Details</h2>
-
-<form id="regForm" onsubmit="handleProcess(event)">
-
-<!-- inputs UNCHANGED -->
-<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-<input id="name" required placeholder="Full Name" class="px-4 py-2 border rounded-lg">
-<input id="year" required placeholder="Passout Year" class="px-4 py-2 border rounded-lg">
-<select id="discipline" required class="px-4 py-2 border rounded-lg">
-<option value="">Discipline</option><option>Diploma</option><option>BE</option>
+<select id="guests" class="border p-2 w-full mb-4">
+<option value="0">0 Guest</option>
+<option value="1">1 Guest</option>
+<option value="2">2 Guests</option>
 </select>
-<input id="department" required placeholder="Department" class="px-4 py-2 border rounded-lg">
-<input id="mobile" required placeholder="Mobile" class="px-4 py-2 border rounded-lg">
-<input id="email" required placeholder="Email" class="px-4 py-2 border rounded-lg">
-</div>
 
-<div class="bg-purple-50 p-4 rounded-xl border mb-6">
-<div class="flex justify-between mb-2">
-<span>Add Guests</span>
-<select id="guestCount" onchange="calculateTotal()">
-<option value="0">0</option><option value="1">1</option>
-<option value="2">2</option><option value="3">3</option>
-</select>
-</div>
-<div class="flex justify-between font-bold">
-<span>Total</span>
-<span id="totalPrice">₹100</span>
-</div>
-</div>
-
-<button id="payBtn" class="w-full phonepe-btn text-white py-3 rounded-lg">
-Pay & Register
+<button id="btn" class="bg-purple-600 text-white w-full py-2">
+Pay ₹100
 </button>
 
 </form>
-</div>
-</div>
 
 <script>
-/* ================= CONFIG ================= */
-const BACKEND = "https://script.google.com/macros/s/AKfycbwgfErs3w1vMfz41Z35EI8E1LVOxaGj8trBjeVFFD2m0OfyanU6pxJoy6QCYrv3FgiTrQ/exec";
-let currentAmount = 100;
-let processing = false;
-/* ========================================= */
+const BACKEND = "https://script.google.com/macros/s/AKfycbwBKJXUtl0mBE5pw0PIIPsy4uySxquwpm6_LXRTks2gjchGb-RySdco6Yhxnz8k85Gblg/exec";
+const AMOUNT = 100;
 
-function calculateTotal(){
-  const g = Number(document.getElementById("guestCount").value);
-  currentAmount = (1 + g) * 100;
-  document.getElementById("totalPrice").innerText = "₹" + currentAmount;
-}
-
-async function handleProcess(e){
+async function pay(e) {
   e.preventDefault();
-  if(processing) return;
-  processing = true;
-
-  const btn = document.getElementById("payBtn");
   btn.disabled = true;
-  btn.innerHTML = `<div class="loader"></div>`;
 
-  let raw = "";
+  const r = await fetch(BACKEND, {
+    method: "POST",
+    headers: { "Content-Type":"application/json" },
+    body: JSON.stringify({
+      action:"create_payment",
+      amount: AMOUNT
+    })
+  });
 
-  try{
-    const res = await fetch(BACKEND,{
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({
-        action:"create_order",
-        amount:currentAmount
-      })
-    });
+  const o = await r.json();
 
-    raw = await res.text();
-    const data = JSON.parse(raw);
-
-    if(!data.orderId || !data.key) throw "Invalid order";
-
-    const options = {
-      key:data.key,
-      amount:currentAmount*100,
-      currency:"INR",
-      name:"UPL Alumni Meet",
-      order_id:data.orderId,
-      prefill:{
-        name:name.value,
-        email:email.value,
-        contact:mobile.value
-      },
-      notes:{
-        name:name.value,
-        email:email.value,
-        mobile:mobile.value,
-        year:year.value,
-        discipline:discipline.value,
-        department:department.value,
-        guests:guestCount.value
-      },
-      handler:()=>{
-        alert("Payment successful. Confirmation email will be sent.");
-      },
-      modal:{
-        ondismiss:()=>{
-          alert("Payment cancelled");
-        }
-      }
-    };
-
-    new Razorpay(options).open();
-
-  }catch(err){
-    console.error("RAW:",raw);
-    console.error(err);
-    alert("Payment initialization failed. Try again.");
+  if (!o.orderId) {
+    alert("Order failed");
+    btn.disabled = false;
+    return;
   }
 
+  const rp = new Razorpay({
+    key: o.key,
+    amount: AMOUNT * 100,
+    currency: "INR",
+    order_id: o.orderId,
+    handler: async function (res) {
+
+      await fetch(BACKEND, {
+        method:"POST",
+        headers:{ "Content-Type":"application/json" },
+        body: JSON.stringify({
+          action:"payment_success",
+          orderId:o.orderId,
+          paymentId:res.razorpay_payment_id,
+          amount:AMOUNT,
+          name:name.value,
+          email:email.value,
+          mobile:mobile.value,
+          year:year.value,
+          discipline:discipline.value,
+          department:department.value,
+          guests:guests.value
+        })
+      });
+
+      alert("Payment successful");
+      location.reload();
+    }
+  });
+
+  rp.open();
   btn.disabled = false;
-  btn.innerHTML = "Pay & Register";
-  processing = false;
 }
 </script>
-
 </body>
 </html>
