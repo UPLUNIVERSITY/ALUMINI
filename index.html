@@ -12,7 +12,6 @@
     <style>
         body { 
             font-family: 'Poppins', sans-serif;
-            /* Background Image with Dark Overlay for readability */
             background: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.8)), url('https://i.ibb.co/q3G5k42g/Slider-133972189776778304.jpg');
             background-size: cover;
             background-position: center;
@@ -26,15 +25,12 @@
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); 
         }
 
-        /* Razorpay Brand Color Button */
         .razorpay-btn { background-color: #3399cc; transition: all 0.3s ease; }
         .razorpay-btn:hover { background-color: #267ba5; transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
         .razorpay-btn:disabled { background-color: #94a3b8; cursor: not-allowed; transform: none; }
 
-        /* Smooth Input Focus States */
         input:focus, select:focus { border-color: #3399cc; ring: 2px solid #3399cc; }
         
-        /* Loader Animation */
         .loader { border: 3px solid #f3f3f3; border-radius: 50%; border-top: 3px solid #3399cc; width: 20px; height: 20px; animation: spin 1s linear infinite; display: inline-block; margin-right: 8px; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
@@ -122,16 +118,16 @@
                         <span class="text-sm font-semibold text-gray-700">Add Guests (Parents/Spouse)</span>
                         <select id="guestCount" onchange="calculateTotal()" class="border-gray-300 border rounded p-1 text-sm bg-white focus:ring-blue-500">
                             <option value="0">None (Only Me)</option>
-                            <option value="1">1 Guest (+₹100)</option>
-                            <option value="2">2 Guests (+₹200)</option>
-                            <option value="3">3 Guests (+₹300)</option>
-                            <option value="4">4 Guests (+₹400)</option>
-                            <option value="5">5 Guests (+₹500)</option>
+                            <option value="1">1 Guest (+₹1)</option>
+                            <option value="2">2 Guests (+₹2)</option>
+                            <option value="3">3 Guests (+₹3)</option>
+                            <option value="4">4 Guests (+₹4)</option>
+                            <option value="5">5 Guests (+₹5)</option>
                         </select>
                     </div>
                     <div class="flex justify-between items-center border-t border-blue-200 pt-3">
                         <span class="text-gray-500 text-sm font-medium">Total Payable Amount</span>
-                        <span class="text-2xl font-bold text-blue-700" id="totalPrice">₹100</span>
+                        <span class="text-2xl font-bold text-blue-700" id="totalPrice">₹1</span>
                     </div>
                 </div>
 
@@ -141,55 +137,55 @@
                 </button>
                 
                 <p id="statusMsg" class="text-center text-xs text-gray-500 mt-3 hidden"></p>
+                <p class="text-center text-xs text-red-500 mt-1 font-bold">⚠️ LIVE MODE: You will be charged ₹1</p>
             </form>
         </div>
     </div>
 
     <script>
         // ==========================================
-        // ⚠️ CONFIGURATION: ENTER YOUR KEYS HERE
+        // ⚠️ CONFIGURATION
         // ==========================================
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxDO6ix9e--7JDFmMD0XhfEYwRVu2n5CTQ_8T9ce6RMRW1nONGVTGNq2CFyQqrtqSih0w/exec"; 
         const RAZORPAY_KEY_ID = "rzp_live_Rqn2ngShaRsf8X"; 
         // ==========================================
 
-        const pricePerPerson = 1;
+        // --- CHANGE FOR TEST MODE ---
+        const pricePerPerson = 1; // 1 Rupee per person
         let currentTotal = 1;
 
-        // Dynamic Price Calculation
         function calculateTotal() {
             const guests = parseInt(document.getElementById('guestCount').value);
             currentTotal = (1 + guests) * pricePerPerson;
             document.getElementById('totalPrice').innerText = "₹" + currentTotal;
         }
 
-        // Trigger Razorpay Payment
         function initiateRazorpay(e) {
             e.preventDefault();
             const btn = document.getElementById('payBtn');
             const msg = document.getElementById('statusMsg');
             
-            // Validate Mobile Number (Simple Check)
             const mobile = document.getElementById('mobile').value;
             if (mobile.length < 10) {
                 alert("Please enter a valid 10-digit mobile number.");
                 return;
             }
 
-            // UI Feedback
             const originalText = btn.innerHTML;
             btn.innerHTML = `<div class="loader"></div> Initializing...`;
             btn.disabled = true;
 
             var options = {
                 "key": RAZORPAY_KEY_ID, 
-                "amount": currentTotal * 1, // Amount in paise
+                // CRITICAL FIX: Razorpay accepts amount in PAISE.
+                // 1 Rupee = 100 Paise.
+                // We MUST multiply by 100 here.
+                "amount": currentTotal * 100, 
                 "currency": "INR",
                 "name": "UPL University",
                 "description": "Alumni Meet 2025 Registration",
                 "image": "https://i.ibb.co/2Yhfrk8H/UPL-LOGO.png",
                 "handler": function (response){
-                    // PAYMENT SUCCESSFUL - Send data to Google Script
                     sendDataToBackend(response.razorpay_payment_id, btn, originalText);
                 },
                 "prefill": {
@@ -202,7 +198,6 @@
                 },
                 "modal": {
                     "ondismiss": function(){
-                        // Reset button if user closes the popup
                         btn.innerHTML = originalText;
                         btn.disabled = false;
                     }
@@ -211,7 +206,6 @@
 
             var rzp1 = new Razorpay(options);
             
-            // Handle Payment Failure
             rzp1.on('payment.failed', function (response){
                 alert("Transaction Failed: " + response.error.description);
                 btn.innerHTML = originalText;
@@ -221,7 +215,6 @@
             rzp1.open();
         }
 
-        // Send Data to Google Script (Backend)
         function sendDataToBackend(paymentId, btn, originalText) {
             btn.innerHTML = `<div class="loader"></div> Verifying & Saving...`;
             const msg = document.getElementById('statusMsg');
@@ -245,22 +238,16 @@
                 body: JSON.stringify(formData)
             })
             .then(response => {
-                // Success Flow
                 alert(`✅ Registration Successful!\n\nTransaction ID: ${paymentId}\nA confirmation email has been sent to ${formData.email}.`);
                 document.getElementById('regForm').reset();
                 calculateTotal();
-                
-                // Reset UI
                 btn.innerHTML = originalText;
                 btn.disabled = false;
                 msg.classList.add('hidden');
             })
             .catch(error => {
-                // Network Error Handling (CORS often triggers this even on success)
                 console.log("Submission Note:", error);
                 alert(`✅ Registration Complete!\n\nTransaction ID: ${paymentId}\nIf you don't receive an email in 5 minutes, please contact support.`);
-                
-                // Reset UI
                 btn.innerHTML = originalText;
                 btn.disabled = false;
                 msg.classList.add('hidden');
