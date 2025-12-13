@@ -12,10 +12,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
 
 <style>
-/* Custom Styles */
 body{
     font-family:'Poppins',sans-serif;
-    background: linear-gradient(120deg,rgba(2,6,23,.9),rgba(15,23,42,.95)), url('https://i.ibb.co/q3G5k42g/Slider-133972189776778304.jpg') center/cover fixed;
+    background: linear-gradient(120deg,rgba(2,6,23,.9),rgba(15,23,42,.95)),
+    url('https://i.ibb.co/q3G5k42g/Slider-133972189776778304.jpg') center/cover fixed;
 }
 .glass{
     background:rgba(255,255,255,.08);
@@ -34,7 +34,6 @@ body{
     transform:translateY(-1px);
     box-shadow:0 10px 25px rgba(37,99,235,.45);
 }
-/* Loading Spinner */
 .loader{
     width:18px;height:18px;
     border:3px solid #e5e7eb;
@@ -43,6 +42,44 @@ body{
     animation:spin 1s linear infinite;
 }
 @keyframes spin{100%{transform:rotate(360deg)}}
+
+/* PREMIUM SELECT */
+.select-wrap{position:relative}
+.select-wrap select{
+    appearance:none;
+    width:100%;
+    background:#020617;
+    border:1px solid #334155;
+    border-radius:14px;
+    padding:12px 44px 12px 16px;
+    font-size:14px;
+    font-weight:500;
+    color:white;
+    cursor:pointer;
+    transition:all .3s ease;
+}
+.select-wrap select:hover{border-color:#22c55e}
+.select-wrap select:focus{
+    outline:none;
+    box-shadow:0 0 0 2px rgba(34,197,94,.35);
+    animation:pop .25s ease;
+}
+.select-wrap i{
+    position:absolute;
+    right:16px;
+    top:50%;
+    transform:translateY(-50%);
+    color:#94a3b8;
+    pointer-events:none;
+    transition:transform .3s ease;
+}
+.select-wrap:hover i{
+    transform:translateY(-50%) rotate(180deg);
+}
+@keyframes pop{
+    0%{transform:scale(.97)}
+    100%{transform:scale(1)}
+}
 </style>
 </head>
 
@@ -50,15 +87,25 @@ body{
 
 <div class="max-w-7xl w-full grid lg:grid-cols-2 gap-10">
 
-<div class="text-white flex flex-col justify-center space-y-8">
+<!-- LEFT -->
+<div class="text-white flex flex-col justify-center space-y-8 lg:pl-10">
     <div>
+    <center>
         <img src="https://i.ibb.co/2Yhfrk8H/UPL-LOGO.png" class="h-20 bg-white p-2 rounded-lg mb-6"/>
-        <span class="inline-block text-xs font-semibold tracking-widest bg-blue-600 px-3 py-1 rounded-full">ALUMNI HOMECOMING 2026</span>
-        <h1 class="text-4xl lg:text-5xl font-bold mt-4 leading-tight">UPL University Alumni Meet 2026</h1>
-        <p class="text-slate-300 mt-4 max-w-lg">Reconnect with classmates, relive memories, and celebrate the legacy of UPL University.</p>
+        <span class="inline-block text-xs font-semibold tracking-widest bg-blue-600 px-4 py-1 rounded-full">
+            ALUMNI HOMECOMING 2026
+        </span>
+        <h1 class="text-4xl lg:text-5xl font-bold mt-4 leading-tight">
+            UPL University Alumni Meet 2026
+        </h1>
+        <p class="text-slate-300 mt-4 max-w-lg">
+            Reconnect with classmates, relive memories, and celebrate the legacy of UPL University.
+        </p>
+        </center>
     </div>
 
     <div class="grid grid-cols-2 gap-4 max-w-md">
+        
         <div class="glass p-4 rounded-xl">
             <i class="fa-solid fa-calendar text-blue-400 text-xl mb-2"></i>
             <p class="font-semibold">4 January 2026</p>
@@ -72,81 +119,99 @@ body{
         <div class="glass p-4 rounded-xl">
             <i class="fa-solid fa-music text-purple-400 text-xl mb-2"></i>
             <p class="font-semibold">Cultural Night</p>
-            <p class="text-xs text-slate-400">3:00 PM to 7:00pm</p>
+            <p class="text-xs text-slate-400">3:00 PM – 7:00 PM</p>
         </div>
         <div class="glass p-4 rounded-xl">
             <i class="fa-solid fa-utensils text-orange-400 text-xl mb-2"></i>
             <p class="font-semibold">Gala Dinner</p>
             <p class="text-xs text-slate-400">Networking</p>
         </div>
+        
     </div>
 </div>
 
+<!-- FORM -->
 <div class="card p-6 lg:p-10">
-    <h2 class="text-2xl font-bold text-slate-800">Register Now</h2>
-    <p class="text-sm text-slate-500 mb-6">Fill in your details and proceed securely to payment.</p>
+<form id="regForm" onsubmit="initiateRazorpay(event)" class="space-y-4">
 
-    <form id="regForm" onsubmit="initiateRazorpay(event)" class="space-y-4">
+<div class="grid md:grid-cols-2 gap-4">
+    <input id="name" required placeholder="Full Name" class="border px-4 py-3 rounded-lg w-full"/>
+    <input id="mobile" type="tel" required placeholder="Mobile Number" class="border px-4 py-3 rounded-lg w-full"/>
+</div>
 
-        <div class="grid md:grid-cols-2 gap-4">
-            <input id="name" required placeholder="Full Name" class="border px-4 py-3 rounded-lg w-full"/>
-            <input id="mobile" type="tel" required placeholder="Mobile Number" class="border px-4 py-3 rounded-lg w-full"/>
-        </div>
+<input id="email" type="email" required placeholder="Email Address" class="border px-4 py-3 rounded-lg w-full"/>
 
-        <input id="email" type="email" required placeholder="Email Address" class="border px-4 py-3 rounded-lg w-full"/>
+<div class="bg-slate-50 border rounded-xl p-4 space-y-4">
+<h3 class="font-semibold text-slate-700 text-sm">Academic Information</h3>
 
-        <div class="bg-slate-50 border rounded-xl p-4 space-y-4">
-            <h3 class="font-semibold text-slate-700 text-sm">Academic Information</h3>
-            <div class="grid md:grid-cols-2 gap-4">
-                <select id="admissionYear" required onchange="updatePassoutYear()" class="border px-3 py-2 rounded-lg w-full">
-                    <option value="">Admission Year</option>
-                </select>
-                <select id="year" required class="border px-3 py-2 rounded-lg w-full">
-                    <option value="">Passout Year</option>
-                </select>
-            </div>
+<div class="grid md:grid-cols-2 gap-4">
+    <div class="select-wrap">
+        <select id="admissionYear" required onchange="updatePassoutYear()">
+            <option value="">Admission Year</option>
+        </select>
+        <i class="fa-solid fa-chevron-down"></i>
+    </div>
 
-            <div class="grid md:grid-cols-2 gap-4">
-                <select id="discipline" required onchange="updateDepartments()" class="border px-3 py-2 rounded-lg w-full">
-                    <option value="">Discipline</option>
-                    <option>Diploma</option>
-                    <option>BE</option>
-                    <option>ME</option>
-                    <option>BSc</option>
-                    <option>MSc</option>
-                    <option>PhD</option>
-                </select>
-                <select id="department" disabled required class="border px-3 py-2 rounded-lg w-full bg-slate-100">
-                    <option value="">Department</option>
-                </select>
-            </div>
-        </div>
+    <div class="select-wrap">
+        <select id="year" required>
+            <option value="">Passout Year</option>
+        </select>
+        <i class="fa-solid fa-chevron-down"></i>
+    </div>
+</div>
 
-        <div class="bg-slate-900 text-white p-4 rounded-xl flex justify-between items-center">
-            <div>
-                <label class="text-xs text-slate-400">Guests</label>
-                <select id="guestCount" onchange="calculateTotal()" class="bg-slate-800 border border-slate-700 rounded px-2 py-1">
-                    <option value="0">Self Only</option>
-                    <option value="1">+1 Guest</option>
-                    <option value="2">+2 Guests</option>
-                    <option value="3">+3 Guests</option>
-                </select>
-            </div>
-            <div class="text-right">
-                <p class="text-xs text-slate-400">Total Payable</p>
-                <p id="totalPrice" class="text-xl font-bold text-green-400">₹1</p>
-            </div>
-        </div>
+<div class="grid md:grid-cols-2 gap-4">
+    <div class="select-wrap">
+        <select id="discipline" required onchange="updateDepartments()">
+            <option value="">Discipline</option>
+            <option>Diploma</option>
+            <option>BE</option>
+            <option>ME</option>
+            <option>BSc</option>
+            <option>MSc</option>
+            <option>PhD</option>
+        </select>
+        <i class="fa-solid fa-chevron-down"></i>
+    </div>
 
-        <button id="payBtn" type="submit" class="btn-main w-full text-white py-4 rounded-xl font-semibold flex justify-center items-center gap-2">
-            Proceed to Payment <i class="fa-solid fa-arrow-right"></i>
-        </button>
+    <div class="select-wrap">
+        <select id="department" disabled required>
+            <option value="">Department</option>
+        </select>
+        <i class="fa-solid fa-chevron-down"></i>
+    </div>
+</div>
+</div>
 
-        <p id="statusMsg" class="hidden text-xs text-center text-slate-500 mt-2"></p>
-    </form>
+<!-- GUEST -->
+<div class="bg-slate-900 text-white p-6 rounded-2xl border border-slate-800 flex justify-between items-center">
+    <div class="select-wrap w-full">
+        <select id="guestCount" onchange="calculateTotal()">
+            <option value="0">Me only</option>
+            <option value="1">Me +1</option>
+            <option value="2">Me +2</option>
+            <option value="3">Me +3</option>
+        </select>
+        <i class="fa-solid fa-chevron-down"></i>
+    </div>
+
+    <div class="text-right ml-6">
+        <p class="text-xs uppercase text-slate-400">Total Payable</p>
+        <p id="totalPrice" class="text-3xl font-bold text-green-400">₹1</p>
+    </div>
+</div>
+
+<button id="payBtn" type="submit" class="btn-main w-full text-white py-4 rounded-xl font-semibold">
+    Proceed to Payment
+</button>
+
+<p id="statusMsg" class="hidden text-xs text-center text-slate-500"></p>
+
+</form>
 </div>
 
 </div>
+
 
 <script>
     // 1. Dropdown Logic
