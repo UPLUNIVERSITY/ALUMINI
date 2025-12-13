@@ -10,8 +10,8 @@
 
 <body class="bg-gray-100 p-6">
 
-<form id="f" class="max-w-xl mx-auto bg-white p-6 rounded"
- onsubmit="pay(event)">
+<form class="max-w-md mx-auto bg-white p-6 rounded"
+onsubmit="startPayment(event)">
 
 <input id="name" placeholder="Name" required class="border p-2 w-full mb-2">
 <input id="email" placeholder="Email" required class="border p-2 w-full mb-2">
@@ -21,75 +21,76 @@
 <input id="department" placeholder="Department" required class="border p-2 w-full mb-2">
 
 <select id="guests" class="border p-2 w-full mb-4">
-<option value="0">0 Guest</option>
-<option value="1">1 Guest</option>
-<option value="2">2 Guests</option>
+  <option value="0">0 Guest</option>
+  <option value="1">1 Guest</option>
+  <option value="2">2 Guests</option>
 </select>
 
-<button id="btn" class="bg-purple-600 text-white w-full py-2">
+<button id="payBtn" class="bg-purple-600 text-white w-full py-2">
 Pay ₹100
 </button>
 
 </form>
 
 <script>
-const BACKEND = "https://script.google.com/macros/s/AKfycbwBKJXUtl0mBE5pw0PIIPsy4uySxquwpm6_LXRTks2gjchGb-RySdco6Yhxnz8k85Gblg/exec";
+const BACKEND = "https://script.google.com/macros/s/AKfycbyMavFT5CxKBRETiGc4BOflwOrLLxVq0AP08hO8OEvbncJ3rYq2420LvyELKSIORoxmww/exec";
 const AMOUNT = 100;
 
-async function pay(e) {
+async function startPayment(e) {
   e.preventDefault();
-  btn.disabled = true;
+  payBtn.disabled = true;
 
-  const r = await fetch(BACKEND, {
+  const res = await fetch(BACKEND, {
     method: "POST",
-    headers: { "Content-Type":"application/json" },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      action:"create_payment",
+      action: "create_payment",
       amount: AMOUNT
     })
   });
 
-  const o = await r.json();
+  const data = await res.json();
 
-  if (!o.orderId) {
-    alert("Order failed");
-    btn.disabled = false;
+  if (!data.orderId) {
+    alert("Payment init failed");
+    payBtn.disabled = false;
     return;
   }
 
-  const rp = new Razorpay({
-    key: o.key,
+  const rzp = new Razorpay({
+    key: data.key,
     amount: AMOUNT * 100,
     currency: "INR",
-    order_id: o.orderId,
-    handler: async function (res) {
+    order_id: data.orderId,
+    handler: async function (resp) {
 
       await fetch(BACKEND, {
-        method:"POST",
-        headers:{ "Content-Type":"application/json" },
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          action:"payment_success",
-          orderId:o.orderId,
-          paymentId:res.razorpay_payment_id,
-          amount:AMOUNT,
-          name:name.value,
-          email:email.value,
-          mobile:mobile.value,
-          year:year.value,
-          discipline:discipline.value,
-          department:department.value,
-          guests:guests.value
+          action: "payment_success",
+          orderId: data.orderId,
+          paymentId: resp.razorpay_payment_id,
+          amount: AMOUNT,
+          name: name.value,
+          email: email.value,
+          mobile: mobile.value,
+          year: year.value,
+          discipline: discipline.value,
+          department: department.value,
+          guests: guests.value
         })
       });
 
-      alert("Payment successful");
+      alert("Payment successful!");
       location.reload();
     }
   });
 
-  rp.open();
-  btn.disabled = false;
+  rzp.open();
+  payBtn.disabled = false;
 }
 </script>
+
 </body>
 </html>
