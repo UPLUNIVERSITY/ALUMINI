@@ -9,14 +9,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <style>
+   <style>
         body { 
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.8)), url('https://i.ibb.co/q3G5k42g/Slider-133972189776778304.jpg');
+            background: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.8)),
+                        url('https://i.ibb.co/q3G5k42g/Slider-133972189776778304.jpg');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
-            background-repeat: no-repeat;
         }
 
         .glass-card { 
@@ -26,81 +26,104 @@
         }
 
         .razorpay-btn { background-color: #3399cc; transition: all 0.3s ease; }
-        .razorpay-btn:hover { background-color: #267ba5; transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
-        .razorpay-btn:disabled { background-color: #94a3b8; cursor: not-allowed; transform: none; }
+        .razorpay-btn:hover { background-color: #267ba5; transform: translateY(-2px); }
 
-        input:focus, select:focus { border-color: #3399cc; ring: 2px solid #3399cc; }
-        
-        .loader { border: 3px solid #f3f3f3; border-radius: 50%; border-top: 3px solid #3399cc; width: 20px; height: 20px; animation: spin 1s linear infinite; display: inline-block; margin-right: 8px; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .loader {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #3399cc;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
+
 <body class="min-h-screen flex items-center justify-center p-4">
 
-    <div class="glass-card w-full max-w-5xl flex flex-col lg:flex-row overflow-hidden">
-        
-        <div class="w-full lg:w-4/12 bg-slate-900 text-white p-8 flex flex-col justify-between relative">
-            <div class="relative z-10">
-                <img src="https://i.ibb.co/2Yhfrk8H/UPL-LOGO.png" alt="UPL University Logo" class="h-16 w-auto mb-6 object-contain">
-                <h3 class="text-xs font-bold tracking-widest uppercase text-blue-400">UPL University</h3>
-                <h1 class="text-3xl font-bold mb-4">Alumni Meet 2025</h1>
-                <p class="text-slate-300 text-sm">Join us for an evening of nostalgia and networking. "Your presence truly matters to us."</p>
-            </div>
-            
-            <div class="space-y-5 mt-8 text-sm relative z-10">
-                <div class="flex items-center space-x-3 group">
-                    <div class="w-8 h-8 rounded bg-slate-800 flex items-center justify-center text-blue-400"><i class="far fa-calendar-alt"></i></div>
-                    <span class="text-slate-200">Jan 4, 2025 (Sunday)</span>
-                </div>
-                <div class="flex items-center space-x-3 group">
-                    <div class="w-8 h-8 rounded bg-slate-800 flex items-center justify-center text-blue-400"><i class="far fa-clock"></i></div>
-                    <span class="text-slate-200">3:00 PM - 7:00 PM</span>
-                </div>
-                <div class="flex items-center space-x-3 group">
-                    <div class="w-8 h-8 rounded bg-slate-800 flex items-center justify-center text-blue-400"><i class="fas fa-map-marker-alt"></i></div>
-                    <span class="text-slate-200">UPL University Campus</span>
-                </div>
-            </div>
+<div class="glass-card w-full max-w-5xl flex flex-col lg:flex-row overflow-hidden">
 
-            <div class="mt-8 pt-6 border-t border-slate-700">
-                <p class="text-xs text-slate-500">Secured by Razorpay</p>
+    <!-- LEFT PANEL -->
+    <div class="w-full lg:w-4/12 bg-slate-900 text-white p-8 flex flex-col justify-between">
+        <div>
+            <img src="https://i.ibb.co/2Yhfrk8H/UPL-LOGO.png" class="h-16 mb-6">
+            <h3 class="text-xs font-bold tracking-widest uppercase text-blue-400">UPL University</h3>
+            <h1 class="text-3xl font-bold mb-4">Alumni Meet 2025</h1>
+            <p class="text-slate-300 text-sm">Your presence truly matters to us.</p>
+        </div>
+
+        <div class="space-y-4 text-sm mt-8">
+            <div class="flex items-center gap-3">
+                <i class="far fa-calendar-alt text-blue-400"></i>
+                <span>Jan 4, 2025 (Sunday)</span>
+            </div>
+            <div class="flex items-center gap-3">
+                <i class="far fa-clock text-blue-400"></i>
+                <span>3:00 PM – 7:00 PM</span>
+            </div>
+            <div class="flex items-center gap-3">
+                <i class="fas fa-map-marker-alt text-blue-400"></i>
+                <span>UPL University Campus</span>
             </div>
         </div>
 
-        <div class="w-full lg:w-8/12 p-8 lg:p-10">
-            <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b pb-2">Registration Details</h2>
-            
-            <form id="regForm" onsubmit="initiateRazorpay(event)">
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
-                    <div>
-                        <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Full Name</label>
-                        <input type="text" id="name" required class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none transition-colors" placeholder="Enter full name">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Passout Year</label>
-                        <input type="number" id="year" required class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none transition-colors" placeholder="e.g. 2022">
-                    </div>
+        <p class="text-xs text-slate-500 mt-8">Secured by Razorpay</p>
+    </div>
+
+    <!-- RIGHT PANEL -->
+    <div class="w-full lg:w-8/12 p-8 lg:p-10">
+        <h2 class="text-2xl font-bold mb-6 border-b pb-2">Registration Details</h2>
+
+        <form id="regForm" onsubmit="initiateRazorpay(event)">
+
+            <!-- NAME + YEAR -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
+                <div>
+                    <label class="text-xs font-bold uppercase">Full Name</label>
+                    <input id="name" required class="w-full border px-4 py-2 rounded-lg">
+                </div>
+                <div>
+                    <label class="text-xs font-bold uppercase">Passout Year</label>
+                    <select id="year" required class="w-full border px-4 py-2 rounded-lg">
+                        <option value="">Select Year</option>
+                        <script>
+                            for (let y = 2011; y <= 2022; y++) {
+                                document.write(`<option value="${y}">${y}</option>`);
+                            }
+                        </script>
+                    </select>
+                </div>
+            </div>
+
+            <!-- DISCIPLINE + DEPARTMENT -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
+                <div>
+                    <label class="text-xs font-bold uppercase">Discipline</label>
+                    <select id="discipline" required onchange="updateDepartments()"
+                            class="w-full border px-4 py-2 rounded-lg">
+                        <option value="">Select Discipline</option>
+                        <option value="Diploma">Diploma</option>
+                        <option value="BE">B.E / B.Tech</option>
+                        <option value="ME">M.E / M.Tech</option>
+                        <option value="BSc">B.Sc</option>
+                        <option value="MSc">M.Sc</option>
+                        <option value="PhD">PhD</option>
+                    </select>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
-                    <div>
-                        <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Discipline</label>
-                        <select id="discipline" required class="w-full px-4 py-2.5 border border-gray-300 rounded-lg bg-white focus:outline-none transition-colors">
-                            <option value="">Select Discipline</option>
-                            <option value="Diploma">Diploma</option>
-                            <option value="BE">B.E. / B.Tech</option>
-                            <option value="ME">M.E. / M.Tech</option>
-                            <option value="BSc">B.Sc</option>
-                            <option value="MSc">M.Sc</option>
-                            <option value="PhD">PhD</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Department</label>
-                        <input type="text" id="department" required class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none transition-colors" placeholder="e.g. Computer Engineering">
-                    </div>
+                <div>
+                    <label class="text-xs font-bold uppercase">Department</label>
+                    <select id="department" required disabled
+                            class="w-full border px-4 py-2 rounded-lg">
+                        <option value="">Select Department</option>
+                    </select>
                 </div>
+            </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
                     <div>
@@ -142,6 +165,29 @@
         </div>
     </div>
 
+<script>
+function updateDepartments() {
+    const discipline = document.getElementById("discipline").value;
+    const dept = document.getElementById("department");
+    dept.innerHTML = '<option value="">Select Department</option>';
+    dept.disabled = false;
+
+    const map = {
+        Diploma: ["Computer Engineering","Mechanical Engineering","Electrical Engineering","Chemical Engineering", "Environmental Science & Technology"],
+        BE: ["Computer Engineering","Mechanical Engineering","Electrical Engineering","Chemical Engineering","Environmental Science & Technology","Chemical Technology"],
+        ME: ["Computer Engineering","Mechanical Engineering","Electrical Engineering","Chemical Engineering","Environmental Science & Technology"],
+        BSc: ["Microbiology","Chemistry"],
+        MSc: ["Microbiology","Chemistry"],
+        PhD: ["Engineering","Science & Technology"]
+    };
+
+    (map[discipline] || []).forEach(d => {
+        dept.innerHTML += `<option>${d}</option>`;
+    });
+}
+
+</script>
+    
     <script>
         // ==========================================
         // ⚠️ CONFIGURATION
