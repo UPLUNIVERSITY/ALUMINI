@@ -9,6 +9,9 @@
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
 
 <style>
@@ -17,6 +20,49 @@ body{
     background: linear-gradient(120deg,rgba(2,6,23,.9),rgba(15,23,42,.95)),
     url('https://i.ibb.co/q3G5k42g/Slider-133972189776778304.jpg') center/cover fixed;
 }
+
+/* PREMIUM INPUT LIKE SELECT */
+.input-wrap{
+    position:relative;
+}
+
+.input-wrap input{
+    width:100%;
+    appearance:none;
+    background:#ffffff;
+    border:1px solid #e5e7eb;
+    border-radius:14px;
+    padding:12px 44px 12px 16px;
+    font-size:14px;
+    font-weight:500;
+    color:#020617;
+    transition:all .3s ease;
+}
+
+.input-wrap input::placeholder{
+    color:#9ca3af;
+}
+
+.input-wrap input:hover{
+    border-color:#2563eb;
+}
+
+.input-wrap input:focus{
+    outline:none;
+    border-color:#2563eb;
+    box-shadow:0 0 0 2px rgba(37,99,235,.25);
+    animation:pop .25s ease;
+}
+
+.input-wrap i{
+    position:absolute;
+    right:16px;
+    top:50%;
+    transform:translateY(-50%);
+    color:#94a3b8;
+    pointer-events:none;
+}
+
 .glass{
     background:rgba(255,255,255,.08);
     backdrop-filter:blur(12px);
@@ -48,13 +94,13 @@ body{
 .select-wrap select{
     appearance:none;
     width:100%;
-    background:#020617;
+    background:white;
     border:1px solid #334155;
     border-radius:14px;
     padding:12px 44px 12px 16px;
     font-size:14px;
     font-weight:500;
-    color:white;
+    color:black;
     cursor:pointer;
     transition:all .3s ease;
 }
@@ -136,11 +182,23 @@ body{
 <form id="regForm" onsubmit="initiateRazorpay(event)" class="space-y-4">
 
 <div class="grid md:grid-cols-2 gap-4">
-    <input id="name" required placeholder="Full Name" class="border px-4 py-3 rounded-lg w-full"/>
-    <input id="mobile" type="tel" required placeholder="Mobile Number" class="border px-4 py-3 rounded-lg w-full"/>
+
+    <div class="input-wrap">
+        <input id="name" required placeholder="Full Name"/>
+        <i class="fa-solid fa-user"></i>
+    </div>
+
+    <div class="input-wrap">
+        <input id="mobile" type="tel" required placeholder="Mobile Number"/>
+        <i class="fa-solid fa-phone"></i>
+    </div>
+
 </div>
 
-<input id="email" type="email" required placeholder="Email Address" class="border px-4 py-3 rounded-lg w-full"/>
+<div class="input-wrap">
+    <input id="email" type="email" required placeholder="Email Address"/>
+    <i class="fa-solid fa-envelope"></i>
+</div>
 
 <div class="bg-slate-50 border rounded-xl p-4 space-y-4">
 <h3 class="font-semibold text-slate-700 text-sm">Academic Information</h3>
