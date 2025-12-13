@@ -12,11 +12,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
 
 <style>
+/* Custom Styles */
 body{
     font-family:'Poppins',sans-serif;
-    background:
-      linear-gradient(120deg,rgba(2,6,23,.9),rgba(15,23,42,.95)),
-      url('https://i.ibb.co/q3G5k42g/Slider-133972189776778304.jpg') center/cover fixed;
+    background: linear-gradient(120deg,rgba(2,6,23,.9),rgba(15,23,42,.95)), url('https://i.ibb.co/q3G5k42g/Slider-133972189776778304.jpg') center/cover fixed;
 }
 .glass{
     background:rgba(255,255,255,.08);
@@ -35,6 +34,7 @@ body{
     transform:translateY(-1px);
     box-shadow:0 10px 25px rgba(37,99,235,.45);
 }
+/* Loading Spinner */
 .loader{
     width:18px;height:18px;
     border:3px solid #e5e7eb;
@@ -50,21 +50,12 @@ body{
 
 <div class="max-w-7xl w-full grid lg:grid-cols-2 gap-10">
 
-<!-- LEFT : EVENT INFO -->
 <div class="text-white flex flex-col justify-center space-y-8">
-
     <div>
-        <img src="https://i.ibb.co/2Yhfrk8H/UPL-LOGO.png"
-             class="h-20 bg-white p-2 rounded-lg mb-6"/>
-        <span class="inline-block text-xs font-semibold tracking-widest bg-blue-600 px-3 py-1 rounded-full">
-            ALUMNI HOMECOMING 2026
-        </span>
-        <h1 class="text-4xl lg:text-5xl font-bold mt-4 leading-tight">
-            Alumni Reunion
-        </h1>
-        <p class="text-slate-300 mt-4 max-w-lg">
-            Reconnect with classmates, relive memories, and celebrate the legacy of UPL University together.
-        </p>
+        <img src="https://i.ibb.co/2Yhfrk8H/UPL-LOGO.png" class="h-20 bg-white p-2 rounded-lg mb-6"/>
+        <span class="inline-block text-xs font-semibold tracking-widest bg-blue-600 px-3 py-1 rounded-full">ALUMNI HOMECOMING 2026</span>
+        <h1 class="text-4xl lg:text-5xl font-bold mt-4 leading-tight">Alumni Reunion</h1>
+        <p class="text-slate-300 mt-4 max-w-lg">Reconnect with classmates, relive memories, and celebrate the legacy of UPL University.</p>
     </div>
 
     <div class="grid grid-cols-2 gap-4 max-w-md">
@@ -91,237 +82,199 @@ body{
     </div>
 </div>
 
-<!-- RIGHT : FORM -->
 <div class="card p-6 lg:p-10">
+    <h2 class="text-2xl font-bold text-slate-800">Register Now</h2>
+    <p class="text-sm text-slate-500 mb-6">Fill in your details and proceed securely to payment.</p>
 
-<h2 class="text-2xl font-bold text-slate-800">Register Now</h2>
-<p class="text-sm text-slate-500 mb-6">
-    Fill in your details and proceed securely to payment.
-</p>
+    <form id="regForm" onsubmit="initiateRazorpay(event)" class="space-y-4">
 
-<form id="regForm" onsubmit="initiateRazorpay(event)" class="space-y-4">
+        <div class="grid md:grid-cols-2 gap-4">
+            <input id="name" required placeholder="Full Name" class="border px-4 py-3 rounded-lg w-full"/>
+            <input id="mobile" type="tel" required placeholder="Mobile Number" class="border px-4 py-3 rounded-lg w-full"/>
+        </div>
 
-<div class="grid md:grid-cols-2 gap-4">
-    <input id="name" required placeholder="Full Name"
-           class="border px-4 py-3 rounded-lg w-full"/>
-    <input id="mobile" type="tel" required placeholder="Mobile Number"
-           class="border px-4 py-3 rounded-lg w-full"/>
+        <input id="email" type="email" required placeholder="Email Address" class="border px-4 py-3 rounded-lg w-full"/>
+
+        <div class="bg-slate-50 border rounded-xl p-4 space-y-4">
+            <h3 class="font-semibold text-slate-700 text-sm">Academic Information</h3>
+            <div class="grid md:grid-cols-2 gap-4">
+                <select id="admissionYear" required onchange="updatePassoutYear()" class="border px-3 py-2 rounded-lg w-full">
+                    <option value="">Admission Year</option>
+                </select>
+                <select id="year" required class="border px-3 py-2 rounded-lg w-full">
+                    <option value="">Passout Year</option>
+                </select>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-4">
+                <select id="discipline" required onchange="updateDepartments()" class="border px-3 py-2 rounded-lg w-full">
+                    <option value="">Discipline</option>
+                    <option>Diploma</option>
+                    <option>BE</option>
+                    <option>ME</option>
+                    <option>BSc</option>
+                    <option>MSc</option>
+                    <option>PhD</option>
+                </select>
+                <select id="department" disabled required class="border px-3 py-2 rounded-lg w-full bg-slate-100">
+                    <option value="">Department</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="bg-slate-900 text-white p-4 rounded-xl flex justify-between items-center">
+            <div>
+                <label class="text-xs text-slate-400">Guests</label>
+                <select id="guestCount" onchange="calculateTotal()" class="bg-slate-800 border border-slate-700 rounded px-2 py-1">
+                    <option value="0">Self Only</option>
+                    <option value="1">+1 Guest</option>
+                    <option value="2">+2 Guests</option>
+                    <option value="3">+3 Guests</option>
+                </select>
+            </div>
+            <div class="text-right">
+                <p class="text-xs text-slate-400">Total Payable</p>
+                <p id="totalPrice" class="text-xl font-bold text-green-400">₹1</p>
+            </div>
+        </div>
+
+        <button id="payBtn" type="submit" class="btn-main w-full text-white py-4 rounded-xl font-semibold flex justify-center items-center gap-2">
+            Proceed to Payment <i class="fa-solid fa-arrow-right"></i>
+        </button>
+
+        <p id="statusMsg" class="hidden text-xs text-center text-slate-500 mt-2"></p>
+    </form>
 </div>
 
-<input id="email" type="email" required placeholder="Email Address"
-       class="border px-4 py-3 rounded-lg w-full"/>
-
-<div class="bg-slate-50 border rounded-xl p-4 space-y-4">
-    <h3 class="font-semibold text-slate-700 text-sm">
-        Academic Information
-    </h3>
-
-    <div class="grid md:grid-cols-2 gap-4">
-        <select id="admissionYear" required onchange="updatePassoutYear()"
-                class="border px-3 py-2 rounded-lg w-full">
-            <option value="">Admission Year</option>
-        </select>
-
-        <select id="year" required
-                class="border px-3 py-2 rounded-lg w-full">
-            <option value="">Passout Year</option>
-        </select>
-    </div>
-
-    <div class="grid md:grid-cols-2 gap-4">
-        <select id="discipline" required onchange="updateDepartments()"
-                class="border px-3 py-2 rounded-lg w-full">
-            <option value="">Discipline</option>
-            <option>Diploma</option>
-            <option>BE</option>
-            <option>ME</option>
-            <option>BSc</option>
-            <option>MSc</option>
-            <option>PhD</option>
-        </select>
-
-        <select id="department" disabled required
-                class="border px-3 py-2 rounded-lg w-full bg-slate-100">
-            <option value="">Department</option>
-        </select>
-    </div>
 </div>
 
-<div class="bg-slate-900 text-white p-4 rounded-xl flex justify-between items-center">
-    <div>
-        <label class="text-xs text-slate-400">Guests</label>
-        <select id="guestCount" onchange="calculateTotal()"
-                class="bg-slate-800 border border-slate-700 rounded px-2 py-1">
-            <option value="0">Self</option>
-            <option value="1">+1</option>
-            <option value="2">+2</option>
-            <option value="3">+3</option>
-        </select>
-    </div>
-    <div class="text-right">
-        <p class="text-xs text-slate-400">Total</p>
-        <p id="totalPrice" class="text-xl font-bold text-green-400">₹1</p>
-    </div>
-</div>
+<script>
+    // 1. Dropdown Logic
+    const admission = document.getElementById("admissionYear");
+    for(let y=2011; y<=2022; y++){ admission.innerHTML += `<option value="${y}">${y}</option>`; }
 
-<button id="payBtn" type="submit"
-        class="btn-main w-full text-white py-4 rounded-xl font-semibold flex justify-center items-center gap-2">
-    Proceed to Payment <i class="fa-solid fa-arrow-right"></i>
-</button>
+    function updatePassoutYear(){
+        const a = parseInt(admission.value);
+        const p = document.getElementById("year");
+        p.innerHTML = '<option value="">Passout Year</option>';
+        if(!a) return;
+        for(let y=a+1; y<=a+4; y++){ p.innerHTML += `<option value="${y}">${y}</option>`; }
+    }
 
-<p id="statusMsg" class="hidden text-xs text-center text-slate-500"></p>
+    function updateDepartments(){
+        const d = document.getElementById("discipline").value;
+        const dept = document.getElementById("department");
+        dept.disabled = false;
+        dept.innerHTML = '<option value="">Select Department</option>';
+        const map = {
+            Diploma: ["Computer Engineering","Mechanical Engineering","Electrical Engineering","Chemical Engineering","Environmental Science & Technology"],
+            BE: ["Computer Engineering","Mechanical Engineering","Electrical Engineering","Chemical Engineering","Chemical Technology","Environmental Science & Technology"],
+            ME: ["Mechanical Engineering","Electrical Engineering","Chemical Engineering"],
+            BSc: ["Microbiology","Chemistry"],
+            MSc: ["Microbiology","Chemistry", "Environmental Science"],
+            PhD: ["Engineering","Science & Technology"]
+        };
+        (map[d]||[]).forEach(x => dept.innerHTML += `<option value="${x}">${x}</option>`);
+    }
 
-</form>
-</div>
-</div>
+    // ==========================================
+    // 2. CONFIGURATION (PASTE YOUR URL HERE)
+    // ==========================================
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyy3Fz8FbeJrAtvtwhF6iG0752iZY-O3Sb6lQ5pHxS2MShI4sqR2w6BvNRTuBclfIY_/exec"; 
+    const RAZORPAY_KEY_ID = "rzp_live_Rqn2ngShaRsf8X"; 
+    // ==========================================
 
-    <script>
-        const admission = document.getElementById("admissionYear");
-        for(let y=2011; y<=2022; y++){
-            admission.innerHTML += `<option value="${y}">${y}</option>`;
-        }
+    const pricePerPerson = 1; 
+    let currentTotal = 1;
 
-        function updatePassoutYear(){
-            const a = parseInt(admission.value);
-            // Matches ID 'year' for the logic script
-            const p = document.getElementById("year"); 
-            p.innerHTML = '<option value="">Select Passout Year</option>';
-            if(!a) return;
-            for(let y=a+1; y<=a+4; y++){
-                p.innerHTML += `<option value="${y}">${y}</option>`;
-            }
-        }
+    function calculateTotal() {
+        const guests = parseInt(document.getElementById('guestCount').value);
+        currentTotal = (1 + guests) * pricePerPerson;
+        document.getElementById('totalPrice').innerText = "₹" + currentTotal;
+    }
 
-        function updateDepartments(){
-            const d = document.getElementById("discipline").value;
-            const dept = document.getElementById("department");
-            dept.disabled = false;
-            dept.innerHTML = '<option value="">Select Department</option>';
+    function initiateRazorpay(e) {
+        e.preventDefault();
+        const btn = document.getElementById('payBtn');
+        const mobile = document.getElementById('mobile').value;
 
-            const map = {
-                Diploma: ["Computer Engineering","Mechanical Engineering","Electrical Engineering","Chemical Engineering","Environmental Science & Technology"],
-                BE: ["Computer Engineering","Mechanical Engineering","Electrical Engineering","Chemical Engineering","Chemical Technology","Environmental Science & Technology"],
-                ME: ["Mechanical Engineering","Electrical Engineering","Chemical Engineering"],
-                BSc: ["Microbiology","Chemistry"],
-                MSc: ["Microbiology","Chemistry", "Environomental science"],
-                PhD: ["Engineering","Science & Technology"]
-            };
+        // Validations
+        if (mobile.length < 10) { alert("Please enter a valid 10-digit mobile number."); return; }
+        if (GOOGLE_SCRIPT_URL.includes("PASTE_YOUR")) { alert("Error: Please paste the Google Script URL in the code."); return; }
 
-            (map[d]||[]).forEach(x => dept.innerHTML += `<option value="${x}">${x}</option>`);
-        }
-    </script>
+        const originalText = btn.innerHTML;
+        btn.innerHTML = `<div class="loader"></div> Processing...`;
+        btn.disabled = true;
 
-    <script>
-        // ==========================================
-        // ⚠️ CONFIGURATION
-        // ==========================================
-        const GOOGLE_SCRIPT_URL = "hhttps://script.google.com/macros/s/AKfycbxDQEdn2Ude_5DSrGTTnZjUaMft2q2_e4V3M6TWWrBj9JvGfVHZhSmm4L3YOgrMcqDn-A/exec"; 
-        const RAZORPAY_KEY_ID = "rzp_live_Rqn2ngShaRsf8X"; 
-        // ==========================================
-
-        // --- CHANGE FOR TEST MODE ---
-        const pricePerPerson = 1; // 1 Rupee per person
-        let currentTotal = 1;
-
-        function calculateTotal() {
-            const guests = parseInt(document.getElementById('guestCount').value);
-            currentTotal = (1 + guests) * pricePerPerson;
-            document.getElementById('totalPrice').innerText = "₹" + currentTotal;
-        }
-
-        function initiateRazorpay(e) {
-            e.preventDefault();
-            const btn = document.getElementById('payBtn');
-            const msg = document.getElementById('statusMsg');
-            
-            const mobile = document.getElementById('mobile').value;
-            if (mobile.length < 10) {
-                alert("Please enter a valid 10-digit mobile number.");
-                return;
-            }
-
-            const originalText = btn.innerHTML;
-            btn.innerHTML = `<div class="loader"></div> Initializing...`;
-            btn.disabled = true;
-
-            var options = {
-                "key": RAZORPAY_KEY_ID, 
-                // CRITICAL FIX: Razorpay accepts amount in PAISE.
-                // 1 Rupee = 100 Paise.
-                // We MUST multiply by 100 here.
-                "amount": currentTotal * 100, 
-                "currency": "INR",
-                "name": "UPL University",
-                "description": "Alumni Meet 2025 Registration",
-                "image": "https://i.ibb.co/2Yhfrk8H/UPL-LOGO.png",
-                "handler": function (response){
-                    sendDataToBackend(response.razorpay_payment_id, btn, originalText);
-                },
-                "prefill": {
-                    "name": document.getElementById('name').value,
-                    "email": document.getElementById('email').value,
-                    "contact": mobile
-                },
-                "theme": {
-                    "color": "#3399cc"
-                },
-                "modal": {
-                    "ondismiss": function(){
-                        btn.innerHTML = originalText;
-                        btn.disabled = false;
-                    }
+        var options = {
+            "key": RAZORPAY_KEY_ID,
+            "amount": currentTotal * 100, // Conversion to Paise
+            "currency": "INR",
+            "name": "UPL University",
+            "description": "Alumni Registration Fee",
+            "image": "https://i.ibb.co/2Yhfrk8H/UPL-LOGO.png",
+            "handler": function (response){
+                sendDataToBackend(response.razorpay_payment_id, btn, originalText);
+            },
+            "prefill": {
+                "name": document.getElementById('name').value,
+                "email": document.getElementById('email').value,
+                "contact": mobile
+            },
+            "theme": { "color": "#2563eb" },
+            "modal": {
+                "ondismiss": function(){
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
                 }
-            };
+            }
+        };
 
-            var rzp1 = new Razorpay(options);
-            
-            rzp1.on('payment.failed', function (response){
-                alert("Transaction Failed: " + response.error.description);
-                btn.innerHTML = originalText;
-                btn.disabled = false;
-            });
+        var rzp1 = new Razorpay(options);
+        rzp1.on('payment.failed', function (response){
+            alert("Transaction Failed: " + response.error.description);
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+        });
+        rzp1.open();
+    }
 
-            rzp1.open();
-        }
+    function sendDataToBackend(paymentId, btn, originalText) {
+        btn.innerHTML = `<div class="loader"></div> Verifying...`;
+        const msg = document.getElementById('statusMsg');
+        msg.innerText = "Payment Successful. Redirecting...";
+        msg.classList.remove('hidden');
 
-        function sendDataToBackend(paymentId, btn, originalText) {
-            btn.innerHTML = `<div class="loader"></div> Verifying & Saving...`;
-            const msg = document.getElementById('statusMsg');
-            msg.innerText = "Please wait, do not close this window.";
-            msg.classList.remove('hidden');
+        const formData = {
+            payment_id: paymentId,
+            name: document.getElementById('name').value,
+            email: document.getElementById('email').value,
+            mobile: document.getElementById('mobile').value,
+            year: document.getElementById('year').value,
+            discipline: document.getElementById('discipline').value,
+            department: document.getElementById('department').value,
+            guests: document.getElementById('guestCount').value,
+            amount: currentTotal
+        };
 
-            const formData = {
-                payment_id: paymentId,
-                name: document.getElementById('name').value,
-                email: document.getElementById('email').value,
-                mobile: document.getElementById('mobile').value,
-                year: document.getElementById('year').value,
-                discipline: document.getElementById('discipline').value,
-                department: document.getElementById('department').value,
-                guests: document.getElementById('guestCount').value,
-                amount: currentTotal
-            };
+        fetch(GOOGLE_SCRIPT_URL, {
+            method: "POST",
+            mode: "no-cors",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(formData)
+        })
+        .then(response => {
+            // === REDIRECT LOGIC ===
+            window.location.href = "thankyou.html";
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            alert("Payment successful, but redirection failed.");
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+        });
+    }
+</script>
 
-            fetch(GOOGLE_SCRIPT_URL, {
-                method: "POST",
-                body: JSON.stringify(formData)
-            })
-            .then(response => {
-                alert(`✅ Registration Successful!\n\nTransaction ID: ${paymentId}\nA confirmation email has been sent to ${formData.email}.`);
-                document.getElementById('regForm').reset();
-                calculateTotal();
-                btn.innerHTML = originalText;
-                btn.disabled = false;
-                msg.classList.add('hidden');
-            })
-            .catch(error => {
-                console.log("Submission Note:", error);
-                alert(`✅ Registration Complete!\n\nTransaction ID: ${paymentId}\nIf you don't receive an email in 5 minutes, please contact support.`);
-                btn.innerHTML = originalText;
-                btn.disabled = false;
-                msg.classList.add('hidden');
-            });
-        }
-    </script>
 </body>
 </html>
