@@ -153,8 +153,8 @@
         const RAZORPAY_KEY_ID = "rzp_live_Rqn2ngShaRsf8X"; 
         // ==========================================
 
-        const pricePerPerson = 100;
-        let currentTotal = 100;
+        const pricePerPerson = 1;
+        let currentTotal = 1;
 
         // Dynamic Price Calculation
         function calculateTotal() {
@@ -183,7 +183,7 @@
 
             var options = {
                 "key": RAZORPAY_KEY_ID, 
-                "amount": currentTotal * 100, // Amount in paise
+                "amount": currentTotal * 1, // Amount in paise
                 "currency": "INR",
                 "name": "UPL University",
                 "description": "Alumni Meet 2025 Registration",
