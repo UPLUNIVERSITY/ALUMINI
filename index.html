@@ -1,405 +1,106 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>UPL University Alumni Meet 2026</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Closed - UPL University Alumni Meet 2026</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
 
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(120deg, rgba(2, 6, 23, 0.9), rgba(15, 23, 42, 0.95)),
+            url('https://i.ibb.co/q3G5k42g/Slider-133972189776778304.jpg') center/cover fixed;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+        .status-badge {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
 
-<style>
-body{
-    font-family:'Poppins',sans-serif;
-    background: linear-gradient(120deg,rgba(2,6,23,.9),rgba(15,23,42,.95)),
-    url('https://i.ibb.co/q3G5k42g/Slider-133972189776778304.jpg') center/cover fixed;
-}
+        .pulse {
+            animation: pulse-animation 2s infinite;
+        }
 
-/* PREMIUM INPUT LIKE SELECT */
-.input-wrap{
-    position:relative;
-}
-
-.input-wrap input{
-    width:100%;
-    appearance:none;
-    background:#ffffff;
-    border:1px solid #e5e7eb;
-    border-radius:14px;
-    padding:12px 44px 12px 16px;
-    font-size:14px;
-    font-weight:500;
-    color:#020617;
-    transition:all .3s ease;
-}
-
-.input-wrap input::placeholder{
-    color:#9ca3af;
-}
-
-.input-wrap input:hover{
-    border-color:#2563eb;
-}
-
-.input-wrap input:focus{
-    outline:none;
-    border-color:#2563eb;
-    box-shadow:0 0 0 2px rgba(37,99,235,.25);
-    animation:pop .25s ease;
-}
-
-.input-wrap i{
-    position:absolute;
-    right:16px;
-    top:50%;
-    transform:translateY(-50%);
-    color:#94a3b8;
-    pointer-events:none;
-}
-
-.glass{
-    background:rgba(255,255,255,.08);
-    backdrop-filter:blur(12px);
-    border:1px solid rgba(255,255,255,.12);
-}
-.card{
-    background:#fff;
-    border-radius:18px;
-    box-shadow:0 30px 60px rgba(0,0,0,.35);
-}
-.btn-main{
-    background:linear-gradient(135deg,#2563eb,#1d4ed8);
-}
-.btn-main:hover{
-    transform:translateY(-1px);
-    box-shadow:0 10px 25px rgba(37,99,235,.45);
-}
-.loader{
-    width:18px;height:18px;
-    border:3px solid #e5e7eb;
-    border-top:3px solid #2563eb;
-    border-radius:50%;
-    animation:spin 1s linear infinite;
-}
-@keyframes spin{100%{transform:rotate(360deg)}}
-
-/* PREMIUM SELECT */
-.select-wrap{position:relative}
-.select-wrap select{
-    appearance:none;
-    width:100%;
-    background:white;
-    border:1px solid #334155;
-    border-radius:14px;
-    padding:12px 44px 12px 16px;
-    font-size:14px;
-    font-weight:500;
-    color:black;
-    cursor:pointer;
-    transition:all .3s ease;
-}
-.select-wrap select:hover{border-color:#22c55e}
-.select-wrap select:focus{
-    outline:none;
-    box-shadow:0 0 0 2px rgba(34,197,94,.35);
-    animation:pop .25s ease;
-}
-.select-wrap i{
-    position:absolute;
-    right:16px;
-    top:50%;
-    transform:translateY(-50%);
-    color:#94a3b8;
-    pointer-events:none;
-    transition:transform .3s ease;
-}
-.select-wrap:hover i{
-    transform:translateY(-50%) rotate(180deg);
-}
-@keyframes pop{
-    0%{transform:scale(.97)}
-    100%{transform:scale(1)}
-}
-</style>
+        @keyframes pulse-animation {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+    </style>
 </head>
+<body class="px-4">
 
-<body class="min-h-screen flex items-center justify-center px-4 py-10">
+    <div class="glass-card max-w-2xl w-full p-8 lg:p-12 text-center text-white relative overflow-hidden">
+        <div class="absolute -top-24 -right-24 w-48 h-48 bg-blue-600 rounded-full blur-[100px] opacity-20"></div>
+        
+        <div class="relative z-10">
+            <img src="https://i.ibb.co/2Yhfrk8H/UPL-LOGO.png" alt="UPL University" class="h-20 bg-white p-2 rounded-lg mx-auto mb-8 shadow-lg">
 
-<div class="max-w-7xl w-full grid lg:grid-cols-2 gap-10">
+            <span class="inline-flex items-center px-4 py-1 rounded-full text-xs font-bold tracking-widest status-badge mb-6">
+                <span class="w-2 h-2 bg-red-500 rounded-full mr-2 animate-ping"></span>
+                REGISTRATION CLOSED
+            </span>
 
-<!-- LEFT -->
-<div class="text-white flex flex-col justify-center space-y-8 lg:pl-10">
-    <div>
-    <center>
-        <img src="https://ik.imagekit.io/fxpgxhuru/UPL_LOGO.png" class="h-20 bg-white p-2 rounded-lg mb-6"/>
-        <span class="inline-block text-xs font-semibold tracking-widest bg-blue-600 px-4 py-1 rounded-full">
-            ALUMNI HOMECOMING 2026
-        </span>
-        <h1 class="text-4xl lg:text-5xl font-bold mt-4 leading-tight">
-            UPL University Alumni Meet 2026
-        </h1>
-        <p class="text-slate-300 mt-4 max-w-lg">
-            Reconnect with classmates, relive memories, and celebrate the legacy of UPL University.
+            <h1 class="text-3xl lg:text-4xl font-bold mb-4 leading-tight">
+                Thank You for the <span class="text-blue-400">Overwhelming Support!</span>
+            </h1>
+
+            <p class="text-slate-300 text-lg mb-8 leading-relaxed">
+                The response for the **UPL University Alumni Meet 2026** has been incredible. 
+                Our registrations are now officially closed.
+            </p>
+
+            <div class="bg-white/5 border border-white/10 rounded-2xl p-6 mb-8">
+                <h3 class="text-blue-400 font-semibold mb-3 uppercase tracking-wider text-sm">Save the Date</h3>
+                <div class="flex flex-col md:flex-row items-center justify-center gap-6">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-calendar-check text-2xl text-green-400"></i>
+                        <span class="text-xl font-medium">4th Jan, 2026</span>
+                    </div>
+                    <div class="hidden md:block w-px h-8 bg-white/20"></div>
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-clock text-2xl text-blue-400"></i>
+                        <span class="text-xl font-medium">3:00 PM onwards</span>
+                    </div>
+                </div>
+            </div>
+
+            <p class="text-slate-400 italic mb-8">
+                "It's finally time to walk down memory lane together."
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="https://upluniversity.ac.in" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-xl font-semibold transition-all transform hover:-translate-y-1">
+                    Visit University Website
+                </a>
+                <a href="mailto:upl@upluniversity.ac.in" class="bg-white/10 hover:bg-white/20 text-white px-8 py-3 rounded-xl font-semibold border border-white/10 transition-all">
+                    Contact Organizer
+                </a>
+            </div>
+        </div>
+
+        <p class="mt-12 text-xs text-slate-500 uppercase tracking-widest">
+            UPL University of Sustainable Technology © 2026
         </p>
-        </center>
     </div>
-<center>
-    <div class="grid grid-cols-2 gap-4 max-w-md">
-        
-        <div class="glass p-4 rounded-xl">
-            <i class="fa-solid fa-calendar text-blue-400 text-xl mb-2"></i>
-            <p class="font-semibold">4 January 2026</p>
-            <p class="text-xs text-slate-400">Event Date</p>
-        </div>
-        <div class="glass p-4 rounded-xl">
-            <i class="fa-solid fa-location-dot text-red-400 text-xl mb-2"></i>
-            <p class="font-semibold">UPL Campus</p>
-            <p class="text-xs text-slate-400">Main Auditorium</p>
-        </div>
-        <div class="glass p-4 rounded-xl">
-            <i class="fa-solid fa-music text-purple-400 text-xl mb-2"></i>
-            <p class="font-semibold">Cultural Night</p>
-            <p class="text-xs text-slate-400">3:00 PM – 7:00 PM</p>
-        </div>
-        <div class="glass p-4 rounded-xl">
-            <i class="fa-solid fa-utensils text-orange-400 text-xl mb-2"></i>
-            <p class="font-semibold">Gala Dinner</p>
-            <p class="text-xs text-slate-400">Networking</p>
-        </div>
-        
-    </div>
-    </center>
-</div>
-
-<!-- FORM -->
-<div class="card p-6 lg:p-10">
-<form id="regForm" onsubmit="initiateRazorpay(event)" class="space-y-4">
-
-<div class="grid md:grid-cols-2 gap-4">
-
-    <div class="input-wrap">
-        <input id="name" required placeholder="Full Name"/>
-        <i class="fa-solid fa-user"></i>
-    </div>
-
-    <div class="input-wrap">
-        <input id="mobile" type="tel" required placeholder="Mobile Number"/>
-        <i class="fa-solid fa-phone"></i>
-    </div>
-
-</div>
-
-<div class="input-wrap">
-    <input id="email" type="email" required placeholder="Email Address"/>
-    <i class="fa-solid fa-envelope"></i>
-</div>
-
-<div class="bg-slate-50 border rounded-xl p-4 space-y-4">
-<h3 class="font-semibold text-slate-700 text-sm">Academic Information</h3>
-
-<div class="grid md:grid-cols-2 gap-4">
-    <div class="select-wrap">
-        <select id="admissionYear" required onchange="updatePassoutYear()">
-            <option value="">Admission Year</option>
-        </select>
-        <i class="fa-solid fa-chevron-down"></i>
-    </div>
-
-    <div class="select-wrap">
-        <select id="year" required>
-            <option value="">Passout Year</option>
-        </select>
-        <i class="fa-solid fa-chevron-down"></i>
-    </div>
-</div>
-
-<div class="grid md:grid-cols-2 gap-4">
-    <div class="select-wrap">
-        <select id="discipline" required onchange="updateDepartments()">
-            <option value="">Discipline</option>
-            <option>Diploma</option>
-            <option>BE</option>
-            <option>ME</option>
-            <option>BSc</option>
-            <option>MSc</option>
-            <option>PhD</option>
-        </select>
-        <i class="fa-solid fa-chevron-down"></i>
-    </div>
-
-    <div class="select-wrap">
-        <select id="department" disabled required>
-            <option value="">Department</option>
-        </select>
-        <i class="fa-solid fa-chevron-down"></i>
-    </div>
-</div>
-</div>
-
-<!-- GUEST -->
-<div class="bg-slate-900 text-white p-6 rounded-2xl border border-slate-800 flex justify-between items-center">
-    <div class="select-wrap w-full">
-        <select id="guestCount" onchange="calculateTotal()">
-            <option value="0">Me only</option>
-            <option value="1">Me +1</option>
-            <option value="2">Me +2</option>
-            <option value="3">Me +3</option>
-        </select>
-        <i class="fa-solid fa-chevron-down"></i>
-    </div>
-
-    <div class="text-right ml-6">
-        <p class="text-xs uppercase text-slate-400">Total Payable</p>
-        <p id="totalPrice" class="text-3xl font-bold text-green-400">₹100</p>
-    </div>
-</div>
-
-<button id="payBtn" type="submit" class="btn-main w-full text-white py-4 rounded-xl font-semibold">
-    Proceed to Payment
-</button>
-
-<p id="statusMsg" class="hidden text-xs text-center text-slate-500"></p>
-
-</form>
-</div>
-
-</div>
-
-
-<script>
-    // 1. Dropdown Logic
-    const admission = document.getElementById("admissionYear");
-    for(let y=2011; y<=2022; y++){ admission.innerHTML += `<option value="${y}">${y}</option>`; }
-
-    function updatePassoutYear(){
-        const a = parseInt(admission.value);
-        const p = document.getElementById("year");
-        p.innerHTML = '<option value="">Passout Year</option>';
-        if(!a) return;
-        for(let y=a+1; y<=a+7; y++){ p.innerHTML += `<option value="${y}">${y}</option>`; }
-    }
-
-    function updateDepartments(){
-        const d = document.getElementById("discipline").value;
-        const dept = document.getElementById("department");
-        dept.disabled = false;
-        dept.innerHTML = '<option value="">Select Department</option>';
-        const map = {
-            Diploma: ["Computer Engineering","Mechanical Engineering","Electrical Engineering","Chemical Engineering","Environmental Science & Technology"],
-            BE: ["Computer Engineering","Mechanical Engineering","Electrical Engineering","Chemical Engineering","Chemical Technology","Environmental Science & Technology"],
-            ME: ["Mechanical Engineering","Electrical Engineering","Chemical Engineering"],
-            BSc: ["Microbiology","Chemistry"],
-            MSc: ["Microbiology","Chemistry", "Environmental Science"],
-            PhD: ["Engineering","Science & Technology"]
-        };
-        (map[d]||[]).forEach(x => dept.innerHTML += `<option value="${x}">${x}</option>`);
-    }
-
-    // ==========================================
-    // 2. CONFIGURATION (PASTE YOUR URL HERE)
-    // ==========================================
-    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyuqa47RJkmwz2u9h4qhpc_eJu-xLTVy7iTuDeNhZTzzqA3FFa3AE8dHH9QABE_sy_4tg/exec"; 
-    const RAZORPAY_KEY_ID = "rzp_live_Rqn2ngShaRsf8X"; 
-    // ==========================================
-
-    const pricePerPerson = 100; 
-    let currentTotal = 100;
-
-    function calculateTotal() {
-        const guests = parseInt(document.getElementById('guestCount').value);
-        currentTotal = (1 + guests) * pricePerPerson;
-        document.getElementById('totalPrice').innerText = "₹" + currentTotal;
-    }
-
-    function initiateRazorpay(e) {
-        e.preventDefault();
-        const btn = document.getElementById('payBtn');
-        const mobile = document.getElementById('mobile').value;
-
-        // Validations
-        if (mobile.length < 10) { alert("Please enter a valid 10-digit mobile number."); return; }
-        if (GOOGLE_SCRIPT_URL.includes("PASTE_YOUR")) { alert("Error: Please paste the Google Script URL in the code."); return; }
-
-        const originalText = btn.innerHTML;
-        btn.innerHTML = `<div class="loader"></div> Processing...`;
-        btn.disabled = true;
-
-        var options = {
-            "key": RAZORPAY_KEY_ID,
-            "amount": currentTotal * 100, // Conversion to Paise
-            "currency": "INR",
-            "name": "UPL University",
-            "description": "Alumni Registration Fee",
-            "image": "https://i.ibb.co/2Yhfrk8H/UPL-LOGO.png",
-            "handler": function (response){
-                sendDataToBackend(response.razorpay_payment_id, btn, originalText);
-            },
-            "prefill": {
-                "name": document.getElementById('name').value,
-                "email": document.getElementById('email').value,
-                "contact": mobile
-            },
-            "theme": { "color": "#2563eb" },
-            "modal": {
-                "ondismiss": function(){
-                    btn.innerHTML = originalText;
-                    btn.disabled = false;
-                }
-            }
-        };
-
-        var rzp1 = new Razorpay(options);
-        rzp1.on('payment.failed', function (response){
-            alert("Transaction Failed: " + response.error.description);
-            btn.innerHTML = originalText;
-            btn.disabled = false;
-        });
-        rzp1.open();
-    }
-
-    function sendDataToBackend(paymentId, btn, originalText) {
-        btn.innerHTML = `<div class="loader"></div> Verifying...`;
-        const msg = document.getElementById('statusMsg');
-        msg.innerText = "Payment Successful. Redirecting...";
-        msg.classList.remove('hidden');
-
-        const formData = {
-            payment_id: paymentId,
-            name: document.getElementById('name').value,
-            email: document.getElementById('email').value,
-            mobile: document.getElementById('mobile').value,
-            admission: document.getElementById('admissionYear').value,
-            year: document.getElementById('year').value,
-            discipline: document.getElementById('discipline').value,
-            department: document.getElementById('department').value,
-            guests: document.getElementById('guestCount').value,
-            amount: currentTotal
-        };
-
-        fetch(GOOGLE_SCRIPT_URL, {
-            method: "POST",
-            mode: "no-cors",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(formData)
-        })
-        .then(response => {
-            // === REDIRECT LOGIC ===
-            window.location.href = "thankyou.html";
-        })
-        .catch(error => {
-            console.error("Error:", error);
-            alert("Payment successful, but redirection failed.");
-            btn.innerHTML = originalText;
-            btn.disabled = false;
-        });
-    }
-</script>
 
 </body>
 </html>
